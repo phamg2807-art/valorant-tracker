@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Valorant Match History Tracker</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body { font-family: sans-serif; padding: 2em; }
+    input { margin: 0.5em; }
+    button { margin: 0.5em; }
+    ul { margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <h1>Valorant Match History Tracker</h1>
+  <input id="username" placeholder="Riot Username" />
+  <input id="tag" placeholder="Tag (e.g. NA1)" />
+  <button onclick="fetchMatches()">Fetch Match History</button>
+  <div id="error" style="color:red"></div>
+  <ul id="matches"></ul>
+  <script>
+    const API_URL = 'https://your-backend.onrender.com'; // Replace with your Render backend URL
+
+    async function fetchMatches() {
+      document.getElementById('error').textContent = '';
+      document.getElementById('matches').innerHTML = '';
+      const username = document.getElementById('username').value;
+      const tag = document.getElementById('tag').value;
+      if (!username || !tag) {
+        document.getElementById('error').textContent = 'Please enter both username and tag.';
+        return;
+      }
+      try {
+        const res = await fetch(`${API_URL}/api/match-history/${username}/${tag}`);
+        const data = await res.json();
+        if (data.error) {
+          document.getElementById('error').textContent = data.error;
+        } else {
+          const matches = data.data.matches;
+          if (!matches || matches.length === 0) {
+            document.getElementById('error').textContent = 'No matches found.';
+            return;
+          }
+          document.getElementById('matches').innerHTML = matches.map(
+            match => `<li>${match.metadata.mapName} - ${match.stats.kills} Kills</li>`
+          ).join('');
+        }
+      } catch (err) {
+        document.getElementById('error').textContent = 'Failed to fetch data.';
+      }
+    }
+  </script>
+</body>
+</html>
