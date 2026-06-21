@@ -6,7 +6,7 @@ const axios = require('axios');
 const app = express();
 app.use(cors());
 
-const TRACKER_API_KEY = 'YOUR_TRACKER_API_KEY'; // Replace with your Tracker Network API key
+const TRACKER_API_KEY = '9af19bf6-7e4b-41e0-8f3d-f39a3abb0e4b'; // Replace with your Tracker Network API key
 
 app.get('/api/match-history/:username/:tag', async (req, res) => {
   const { username, tag } = req.params;
