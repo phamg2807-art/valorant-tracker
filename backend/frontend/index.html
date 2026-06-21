@@ -1,4 +1,3 @@
-<!-- frontend/index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,7 +41,7 @@
         } else {
           data.matches.forEach(match => {
             const li = document.createElement('li');
-            li.textContent = `${match.metadata.mapName || 'Unknown Map'} - ${match.stats.kills || 0} Kills`;
+            li.textContent = `${match.metadata?.mapName || 'Unknown Map'} - ${match.stats?.kills || 0} Kills`;
             document.getElementById('matches').appendChild(li);
           });
         }
